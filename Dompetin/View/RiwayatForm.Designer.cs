@@ -6,7 +6,8 @@
         /// Required designer variable.
         /// </summary>
         private System.ComponentModel.IContainer components = null;
-
+        ///azhar
+        ///
         /// <summary>
         /// Clean up any resources being used.
         /// </summary>
@@ -38,6 +39,8 @@
             this.btnBack = new System.Windows.Forms.Button();
             this.btnHapusSemua = new System.Windows.Forms.Button();
             this.btnHapus = new System.Windows.Forms.Button();
+            this.txtCari = new System.Windows.Forms.TextBox();
+            this.btnCari = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgvRiwayat)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox4)).BeginInit();
             this.SuspendLayout();
@@ -46,7 +49,7 @@
             // 
             this.lblJudul.AutoSize = true;
             this.lblJudul.Font = new System.Drawing.Font("Palatino Linotype", 14.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Bold | System.Drawing.FontStyle.Italic))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.lblJudul.Location = new System.Drawing.Point(159, 125);
+            this.lblJudul.Location = new System.Drawing.Point(160, 103);
             this.lblJudul.Name = "lblJudul";
             this.lblJudul.Size = new System.Drawing.Size(176, 25);
             this.lblJudul.TabIndex = 0;
@@ -55,7 +58,7 @@
             // dgvRiwayat
             // 
             this.dgvRiwayat.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgvRiwayat.Location = new System.Drawing.Point(23, 168);
+            this.dgvRiwayat.Location = new System.Drawing.Point(23, 188);
             this.dgvRiwayat.Name = "dgvRiwayat";
             this.dgvRiwayat.Size = new System.Drawing.Size(470, 345);
             this.dgvRiwayat.TabIndex = 1;
@@ -122,7 +125,7 @@
             // btnHapusSemua
             // 
             this.btnHapusSemua.Font = new System.Drawing.Font("Palatino Linotype", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHapusSemua.Location = new System.Drawing.Point(294, 519);
+            this.btnHapusSemua.Location = new System.Drawing.Point(294, 539);
             this.btnHapusSemua.Name = "btnHapusSemua";
             this.btnHapusSemua.Size = new System.Drawing.Size(130, 33);
             this.btnHapusSemua.TabIndex = 27;
@@ -133,7 +136,7 @@
             // btnHapus
             // 
             this.btnHapus.Font = new System.Drawing.Font("Palatino Linotype", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btnHapus.Location = new System.Drawing.Point(77, 519);
+            this.btnHapus.Location = new System.Drawing.Point(77, 539);
             this.btnHapus.Name = "btnHapus";
             this.btnHapus.Size = new System.Drawing.Size(131, 33);
             this.btnHapus.TabIndex = 28;
@@ -141,12 +144,33 @@
             this.btnHapus.UseVisualStyleBackColor = true;
             this.btnHapus.Click += new System.EventHandler(this.btnHapus_Click);
             // 
+            // txtCari
+            // 
+            this.txtCari.Font = new System.Drawing.Font("Palatino Linotype", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.txtCari.Location = new System.Drawing.Point(233, 153);
+            this.txtCari.Name = "txtCari";
+            this.txtCari.Size = new System.Drawing.Size(181, 29);
+            this.txtCari.TabIndex = 29;
+            // 
+            // btnCari
+            // 
+            this.btnCari.Font = new System.Drawing.Font("Palatino Linotype", 12F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnCari.Location = new System.Drawing.Point(420, 153);
+            this.btnCari.Name = "btnCari";
+            this.btnCari.Size = new System.Drawing.Size(73, 29);
+            this.btnCari.TabIndex = 30;
+            this.btnCari.Text = "Cari";
+            this.btnCari.UseVisualStyleBackColor = true;
+            this.btnCari.Click += new System.EventHandler(this.btnCari_Click);
+            // 
             // RiwayatForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ActiveCaption;
             this.ClientSize = new System.Drawing.Size(514, 661);
+            this.Controls.Add(this.btnCari);
+            this.Controls.Add(this.txtCari);
             this.Controls.Add(this.btnHapus);
             this.Controls.Add(this.btnHapusSemua);
             this.Controls.Add(this.btnBack);
@@ -180,5 +204,7 @@
         private System.Windows.Forms.Button btnBack;
         private System.Windows.Forms.Button btnHapusSemua;
         private System.Windows.Forms.Button btnHapus;
+        private System.Windows.Forms.TextBox txtCari;
+        private System.Windows.Forms.Button btnCari;
     }
 }

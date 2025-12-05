@@ -22,26 +22,47 @@ namespace Dompetin.View
 
         private void RiwayatForm_Load(object sender, EventArgs e)
         {
+            
             LoadRiwayat();
         }
 
-        private void LoadRiwayat()
+        private void LoadRiwayat(string kataKunci = null) // Tambahkan parameter opsional
         {
             using (MySqlConnection conn = new MySqlConnection("server=localhost;database=dompetin;uid=root;pwd=;"))
             {
                 conn.Open();
+
+                // 1. Definisikan Query Dasar (Termasuk JOIN ke merchants)
+                // Kita menggunakan JOIN agar bisa mencari berdasarkan nama merchant juga
                 string query = @"SELECT 
-                                 transaksi_id AS 'ID',    /* <--- TAMBAHKAN INI */
-                                 DATE_FORMAT(tanggal, '%Y-%m-%d %H:%i') AS 'Tanggal',
-                                 tipe AS 'Tipe',
-                                 CONCAT('Rp ', FORMAT(jumlah, 0)) AS 'Jumlah',
-                                 keterangan AS 'Keterangan'
-                               FROM transactions
-                               WHERE user_id = @id
-                               ORDER BY tanggal DESC";
+                                 t.transaksi_id AS 'ID',    
+                                 DATE_FORMAT(t.tanggal, '%Y-%m-%d %H:%i') AS 'Tanggal',
+                                 t.tipe AS 'Tipe',
+                                 CONCAT('Rp ', FORMAT(t.jumlah, 0)) AS 'Jumlah',
+                                 t.keterangan AS 'Keterangan',
+                                 m.nama_merchant AS 'Merchant'
+                           FROM transactions t
+                           LEFT JOIN merchants m ON t.merchant_id = m.merchant_id
+                           WHERE t.user_id = @id";
+
+                // 2. Tambahkan Kondisi Pencarian Jika Ada Kata Kunci
+                if (!string.IsNullOrWhiteSpace(kataKunci))
+                {
+                    query += @" AND (t.keterangan LIKE @search 
+                         OR t.tipe LIKE @search 
+                         OR m.nama_merchant LIKE @search)"; // Mencari di 3 kolom
+                }
+
+                query += " ORDER BY t.tanggal DESC"; // Urutkan hasil
 
                 MySqlCommand cmd = new MySqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@id", userId);
+
+                // 3. Tambahkan Parameter @search
+                if (!string.IsNullOrWhiteSpace(kataKunci))
+                {
+                    cmd.Parameters.AddWithValue("@search", $"%{kataKunci}%");
+                }
 
                 MySqlDataAdapter adapter = new MySqlDataAdapter(cmd);
                 DataTable dt = new DataTable();
@@ -55,14 +76,18 @@ namespace Dompetin.View
                 dgvRiwayat.AllowUserToAddRows = false;
                 dgvRiwayat.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
 
-                // Sekarang kolom 'ID' sudah ada dan bisa disembunyikan
+                // Sembunyikan kolom ID (untuk kebutuhan penghapusan)
                 if (dgvRiwayat.Columns.Contains("ID"))
                 {
                     dgvRiwayat.Columns["ID"].Visible = false;
                 }
+                // Sembunyikan kolom Merchant (kolom ini hanya untuk pencarian)
+                if (dgvRiwayat.Columns.Contains("Merchant"))
+                {
+                    dgvRiwayat.Columns["Merchant"].Visible = false;
+                }
             }
         }
-
         private void btnBack_Click(object sender, EventArgs e)
         {
             new MainForm(userId, "").Show();
@@ -147,6 +172,11 @@ namespace Dompetin.View
         private void btnTutup_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void btnCari_Click(object sender, EventArgs e)
+        {
+            LoadRiwayat(txtCari.Text);
         }
     }
     
